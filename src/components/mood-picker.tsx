@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { type FunctionComponent, useState, useCallback } from 'react'
 import { View, Text, StyleSheet, Pressable } from 'react-native'
-import { MoodOptionType } from '../types'
+import { theme } from '../theme'
+import { type MoodOptionType } from '../types'
 
 const moodOptions: MoodOptionType[] = [
   { emoji: '🧑‍💻', description: 'studious' },
@@ -10,35 +11,71 @@ const moodOptions: MoodOptionType[] = [
   { emoji: '😤', description: 'frustrated' },
 ]
 
-export const MoodPicker = () => {
+type MoodPickerProps = {
+  onSelect: (mood: MoodOptionType) => void
+}
+
+export const MoodPicker: FunctionComponent<MoodPickerProps> = ({
+  onSelect,
+}) => {
   const [selectedMood, setSelectedMood] = useState<MoodOptionType>()
 
-  return (
-    <View style={styles.moodList}>
-      {moodOptions.map((option, index) => {
-        const { emoji, description } = option
+  const handleSelect = useCallback(() => {
+    if (selectedMood) {
+      onSelect(selectedMood)
+      setSelectedMood(undefined)
+    }
+  }, [onSelect, selectedMood])
 
-        return (
-          <View key={index}>
-            <Pressable
-              onPress={() => setSelectedMood(option)}
-              style={[
-                styles.moodItem,
-                emoji === selectedMood?.emoji && styles.selectedMoodItem,
-              ]}>
-              <Text style={styles.moodText}>{emoji}</Text>
-            </Pressable>
-            {selectedMood?.emoji === emoji && (
-              <Text style={styles.descriptionText}>{description}</Text>
-            )}
-          </View>
-        )
-      })}
+  return (
+    <View style={styles.container}>
+      <Text style={styles.heading}>How are you right now?</Text>
+      <View style={styles.moodList}>
+        {moodOptions.map((option, index) => {
+          const { emoji, description } = option
+
+          return (
+            <View key={index}>
+              <Pressable
+                onPress={() => setSelectedMood(option)}
+                style={[
+                  styles.moodItem,
+                  emoji === selectedMood?.emoji && styles.selectedMoodItem,
+                ]}>
+                <Text style={styles.moodText}>{emoji}</Text>
+              </Pressable>
+              {selectedMood?.emoji === emoji && (
+                <Text style={styles.descriptionText}>{description}</Text>
+              )}
+            </View>
+          )
+        })}
+      </View>
+      <Pressable style={styles.button} onPress={handleSelect}>
+        <Text style={styles.buttonText}>Choose</Text>
+      </Pressable>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    borderWidth: 2,
+    borderColor: theme.colorPurple,
+    margin: 10,
+    borderRadius: 10,
+    padding: 20,
+    justifyContent: 'space-between',
+    height: 230,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+  },
+  heading: {
+    fontSize: 20,
+    letterSpacing: 1,
+    textAlign: 'center',
+    color: theme.colorWhite,
+    fontFamily: theme.fontFamilyBold,
+  },
   moodText: {
     fontSize: 24,
   },
@@ -65,5 +102,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 10,
     textAlign: 'center',
+  },
+  button: {
+    backgroundColor: theme.colorPurple,
+    width: 150,
+    borderRadius: 20,
+    alignSelf: 'center',
+    padding: 10,
+  },
+  buttonText: {
+    color: theme.colorWhite,
+    textAlign: 'center',
+    fontFamily: theme.fontFamilyBold,
   },
 })
