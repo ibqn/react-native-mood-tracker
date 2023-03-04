@@ -1,9 +1,9 @@
 import { type FunctionComponent, useState, useCallback } from 'react'
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import { theme } from '../theme'
-import { type MoodOptionType } from '../types'
+import { type MoodOption } from '../types'
 
-const moodOptions: MoodOptionType[] = [
+const moodOptions: MoodOption[] = [
   { emoji: '🧑‍💻', description: 'studious' },
   { emoji: '🤔', description: 'pensive' },
   { emoji: '😊', description: 'happy' },
@@ -12,13 +12,13 @@ const moodOptions: MoodOptionType[] = [
 ]
 
 type MoodPickerProps = {
-  onSelect: (mood: MoodOptionType) => void
+  onSelect: (mood: MoodOption) => void
 }
 
 export const MoodPicker: FunctionComponent<MoodPickerProps> = ({
   onSelect,
 }) => {
-  const [selectedMood, setSelectedMood] = useState<MoodOptionType>()
+  const [selectedMood, setSelectedMood] = useState<MoodOption>()
 
   const handleSelect = useCallback(() => {
     if (selectedMood) {
