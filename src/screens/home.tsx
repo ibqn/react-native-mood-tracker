@@ -1,10 +1,11 @@
-import { useCallback, useState } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
-import { MoodPicker } from '../components/'
-import { type MoodOption, type MoodOptionWithTimestamp } from '../types'
+import { useCallback } from 'react'
+import { StyleSheet, View, ScrollView } from 'react-native'
+import { useAppContext } from '../app-provider'
+import { MoodPicker, MoodItemRow } from '../components/'
+import { type MoodOption } from '../types'
 
 export const Home = () => {
-  const [moodList, setMoodList] = useState<MoodOptionWithTimestamp[]>([])
+  const { moodList, setMoodList } = useAppContext()
 
   const handleSelectMood = useCallback((mood: MoodOption) => {
     setMoodList(current => [{ mood, timestamp: Date.now() }, ...current])
@@ -13,16 +14,11 @@ export const Home = () => {
   return (
     <View style={styles.container}>
       <MoodPicker onSelect={handleSelectMood} />
-      {moodList.map((item, index) => {
-        const { timestamp, mood } = item
-        const { emoji } = mood
-
-        return (
-          <Text key={index}>
-            {emoji} {new Date(timestamp).toString()}
-          </Text>
-        )
-      })}
+      <ScrollView>
+        {moodList.map((item, index) => (
+          <MoodItemRow key={index} item={item} />
+        ))}
+      </ScrollView>
     </View>
   )
 }
