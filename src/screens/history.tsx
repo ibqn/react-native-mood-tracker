@@ -1,15 +1,15 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { ScrollView } from 'react-native'
+import { useAppContext } from '../app-provider'
+import { MoodItemRow } from '../components'
 
 export const History = () => {
+  const { moodList } = useAppContext()
+
   return (
-    <View style={styles.container}>
-      <Text>History</Text>
-    </View>
+    <ScrollView>
+      {moodList.map(item => (
+        <MoodItemRow item={item} key={item.timestamp} />
+      ))}
+    </ScrollView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-})
