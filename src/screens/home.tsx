@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { StyleSheet, View, Image } from 'react-native'
+import { StyleSheet, ImageBackground, Image } from 'react-native'
 import { useAppContext } from '../app-provider'
 import { assets } from '../assets'
 import { MoodPicker } from '../components/'
@@ -13,14 +13,14 @@ export const Home = () => {
   }, [])
 
   return (
-    <View style={styles.container}>
+    <ImageBackground source={assets.background} style={styles.container}>
       <Image
         style={styles.image}
         source={assets.butterflies}
         resizeMode="contain"
       />
       <MoodPicker onSelect={handleSelectMood} />
-    </View>
+    </ImageBackground>
   )
 }
 
