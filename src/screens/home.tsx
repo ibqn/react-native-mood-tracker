@@ -14,7 +14,11 @@ export const Home = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={assets.butterflies} resizeMode="contain" />
+      <Image
+        style={styles.image}
+        source={assets.butterflies}
+        resizeMode="contain"
+      />
       <MoodPicker onSelect={handleSelectMood} />
     </View>
   )
@@ -25,5 +29,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  image: {
+    width: 120,
   },
 })
