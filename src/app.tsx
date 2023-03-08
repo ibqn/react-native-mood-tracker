@@ -1,10 +1,13 @@
-import {NavigationContainer} from '@react-navigation/native'
-import {BottomTabsNavigator} from './screens'
+import { NavigationContainer } from '@react-navigation/native'
+import { AppProvider } from './app-provider'
+import { BottomTabsNavigator } from './screens'
 
 export const App = () => {
   return (
-    <NavigationContainer>
-      <BottomTabsNavigator />
-    </NavigationContainer>
+    <AppProvider>
+      <NavigationContainer>
+        <BottomTabsNavigator />
+      </NavigationContainer>
+    </AppProvider>
   )
 }
