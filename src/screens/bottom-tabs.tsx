@@ -3,6 +3,7 @@ import { Home } from './home'
 import { History } from './history'
 import { Analytics } from './analytics'
 import { AnalyticsIcon, HistoryIcon, HomeIcon } from '../components'
+import { theme } from '../theme'
 
 const BottomTabs = createBottomTabNavigator()
 
@@ -10,6 +11,8 @@ export const BottomTabsNavigator = () => {
   return (
     <BottomTabs.Navigator
       screenOptions={({ route }) => ({
+        tabBarActiveTintColor: theme.colorBlue,
+        tabBarInactiveTintColor: theme.colorGrey,
         tabBarIcon: ({ color, size }) => {
           if (route.name === 'Home') {
             return <HomeIcon color={color} size={size} />
